@@ -1,7 +1,28 @@
 <script context="module">
-	export async function load ({ fetch }) {
-		const res = await fetch("https://jsonplaceholder.typicode.com/posts")
-		const posts = await res.json()
+	import { GraphQLClient, gql, request } from 'graphql-request';
+	import { variables } from '$lib/variables'
+
+	export async function load() {
+	  const graphcms = new GraphQLClient(variables.baseUrl,
+	  {
+	  	headers: {}
+	  });
+
+		const QUERY = gql`
+	    {
+	      posts {
+	      	id
+	        title
+	        tags
+	        readTime
+	        image {
+	        	url
+	        }
+	        description
+	      }
+	    }
+	  ` 
+	  const { posts } = await graphcms.request(QUERY)
 		return {
 			props: {
 				posts
@@ -15,18 +36,17 @@
 	import 'carbon-components-svelte/css/white.css'
   import { Search } from 'carbon-components-svelte'
   import PostCard from '$lib/PostCard.svelte'
+  import CarouselCard from '$lib/CarouselCard.svelte'
 
-	let searchQuery = ""
+	$: searchQuery = ""
 	$: searchResult = posts.filter(
-		post => post.title.toLowerCase().includes(searchQuery.toLowerCase()) || post.body.toLowerCase().includes(searchQuery.toLowerCase())
+		post => post.title.toLowerCase().includes(searchQuery.toLowerCase())
 	).reverse()
 </script>
 
 <svelte:head>
 	<title>Home</title>
 </svelte:head>
-
-<h1>Featured Posts</h1>
 
 <section>
 	<Search
@@ -36,10 +56,18 @@
 	/>
 </section>
 
+<h1>Featured Posts</h1>
+
+<div class="carousel">
+	{#each posts as post}
+		<CarouselCard post={post} />
+	{/each}
+</div>
+
 <div class="posts">
 	{#if searchResult.length}
 		{#each searchResult as post}
-			<PostCard post={post} }/>
+			<PostCard post={post} />
 		{/each}
 	{:else}
 		<p>No posts found for {searchQuery}</p>
@@ -50,19 +78,31 @@
 	.posts {
 		display: grid;
 		grid-template-columns: 1fr 1fr;
-		grid-gap: 1em;
+		grid-gap: .5em;
 		margin: 2em 0;
+	}
+
+	.carousel {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
 	}
 
 	h1 {
 		font-size: 2em;
+		font-weight: 500;
 		margin: .5em 0;
 		text-align: center;
+		color: #023047;
 	}
 
 	section {
 		z-index: 1;
-		margin:  0 .3em;
+		margin:  0 2em;
+		display: flex;
+		justify-content: center;
+		align-items: center;
 	}
 
 	@media screen and (max-width:  600px) {

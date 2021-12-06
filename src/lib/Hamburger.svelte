@@ -8,7 +8,7 @@
 <Breakpoint bind:size on:match={e => (events = [...events, e.detail])} />
 
 {#if size === "sm" || size === "md"}
-	<button class="text-black-500 hover:text-red-700 cursor-pointer mr-4 border-none focus:outline-none" class:open on:click={() => open = !open}>
+	<button class="cursor-pointer mr-4 border-none focus:outline-none" class:open on:click={() => open = !open}>
 		<svg width=28 height=28>
 			<line id="top" x1=0 y1=4  x2=32 y2=4/>
 			<line id="middle" x1=0 y1=12 x2=20 y2=12/>
@@ -31,7 +31,12 @@
 	}
 	
 	button {
-		z-index: 20;
+		color: #ff0000;
+		z-index: 2;
+	}
+
+	button:hover {
+		color: #ff0000;
 	}
 	
 	.open svg {

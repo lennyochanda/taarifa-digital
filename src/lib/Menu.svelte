@@ -32,8 +32,8 @@
 			Technology
 		</a>
 
-		<a href="/contact" class="hover:text-gray-700 hover:no-underline">
-			Contact
+		<a href="/about" class="hover:text-gray-700 hover:no-underline">
+			About
 		</a>
 	</nav>
 {/if}

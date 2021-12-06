@@ -3,6 +3,7 @@
 
   import Navbar from '$lib/Navbar.svelte'
   import Sidebar from '$lib/Sidebar.svelte'
+  import Footer from '$lib/Footer.svelte'
 
 	let open = false
 </script>
@@ -13,6 +14,8 @@
 <div class="container">
 	<slot></slot>
 </div>
+
+<Footer />
 
 <style>
 	.container {

@@ -1,18 +1,33 @@
 <script context="module">
-	export async function load ({ page, fetch }) {
-		const id = page.params.id
-		const res = await fetch(
-			`https://jsonplaceholder.typicode.com/posts/${id}`
-		)
-		const post = await res.json()
-		const userRes = await fetch(
-			`https://jsonplaceholder.typicode.com/users/${post.userId}`
-			)
-		const user = await userRes.json()
+	import { GraphQLClient, gql, request } from 'graphql-request';
+	import { variables } from '$lib/variables'
+
+	export async function load({ page }) {
+		const id = `${page.params.id}`
+	  const graphcms = new GraphQLClient(variables.baseUrl,
+	  {
+	  	headers: {}
+	  });
+
+		const QUERY = gql`
+	    {
+	      posts {
+	      	id
+	        title
+	        tags
+	        readTime
+	        image {
+	        	url
+	        }
+	        description
+	      }
+	    }
+	  ` 
+	  const { post } = await graphcms.request(QUERY)
+	  console.log(post)
 		return {
 			props: {
-				post,
-				user
+				post
 			}
 		}
 	}
@@ -23,7 +38,7 @@
 	export let user	
 </script>
 
-<h2>{post.title}</h2>
-<p>{post.body}</p>
+<h2>me</h2>
+<p>me</p>
 
-<p>Written by <a sveltekit:prefetch href={`/authors/${user.id}`}>{user.name}</a></p>
+<p>Written by <a sveltekit:prefetch href={`/authors/`}>me</a></p>

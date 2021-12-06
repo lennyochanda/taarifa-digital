@@ -1,21 +1,15 @@
 <script>
 	export let post
-	import View16 from 'carbon-icons-svelte/lib/View16'
+	import Time16 from 'carbon-icons-svelte/lib/Time16'
+
 	import { Tag } from 'carbon-components-svelte'
 
 	const generateColor = () => {
 		const colors = [
-			"red",
-			"magenta",
-			"purple",
-			"blue",
 			"cyan",
 			"teal",
 			"green",
-			"gray",
-			"cool-gray",
 			"warm-gray",
-			"high-contrast"
 		]
 
 		return colors[Math.floor(Math.random() * colors.length)]
@@ -23,17 +17,16 @@
 </script>
 
 <div class="post">
-	<Tag type={ generateColor() }>tag</Tag>
-	<Tag type={ generateColor() }>tag</Tag>
-	<Tag type={ generateColor() }>tag</Tag>
+	{#each post.tags as tag}
+		<Tag type={ generateColor() }>{tag}</Tag>
+	{/each}
 
 
-	<h2>{post.title.substring(0, 30)}</h2>
-	<p>{post.body.substring(0, 150)}</p>
+	<h2>{post.title}</h2>
 	<div class="cardFooter">
 		<div class="viewInfo">
-			<View16 />
-			<p>2000</p>
+			<Time16 />
+			<p>{post.readTime} min read</p>
 		</div>
 		<p class="link">
 			<a sveltekit:prefetch href={`/posts/${post.id}`}>Read More</a>
@@ -43,15 +36,23 @@
 
 <style>
 	.post {
-		border-radius: 8px;
+		border-radius: 4px;
 		padding: 1em;
-		box-shadow: 0 4px 10px #bbb;
-		background: #fff;
+		box-shadow: 5px 5px 8px #bbb;
+		background-color: #eee;
+		transition: transform 500ms ease;
+	}
+
+	.post:hover,
+	.post:focus,
+	.post:focus-within {
+		transform: scale(1.02);
 	}
 
 	.viewInfo {
 		display:  inline-flex;
 		align-items: center;
+		color: #ff0000;
 	}
 
 	.cardFooter {
@@ -61,12 +62,18 @@
 		padding: .5em;
 	}
 
-	h2 {
-		margin: 0;
-		padding: .2em;
-		font-size: 1.4em;
-		font-weight: 600;
+	.viewInfo > p {
 		color: #023047;
+		font-style: italic;
+	}
+
+	h2 {
+		margin: .4em 0;
+		padding: .2em;
+		font-size: 1.3em;
+		font-weight: 700;
+		color: #023047;
+		border-top: 1px dotted #ddd;
 	}
 
 	.link {
@@ -74,8 +81,13 @@
 	}
 
 	p {
-		padding-left: 5px;
+		padding: 0 5px;
 		color: #343a40;
-		line-height: 130%;
+		font-size: .9em;
+	}
+
+	a {
+		color: #ff7700;
+		font-size: 1em;
 	}
 </style>
