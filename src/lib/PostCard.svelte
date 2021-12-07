@@ -28,7 +28,7 @@
 			<Time16 />
 			<p>{post.readTime} min read</p>
 		</div>
-		<p class="link">
+		<p>
 			<a sveltekit:prefetch href={`/posts/${post.id}`}>Read More</a>
 		</p>
 	</div>
@@ -76,10 +76,6 @@
 		border-top: 1px dotted #ddd;
 	}
 
-	.link {
-		text-align: right;
-	}
-
 	p {
 		padding: 0 5px;
 		color: #343a40;
@@ -87,7 +83,8 @@
 	}
 
 	a {
-		color: #ff7700;
+		text-align: right;
+		color: #ff0000;
 		font-size: 1em;
 	}
 </style>

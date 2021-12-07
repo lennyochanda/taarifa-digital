@@ -56,13 +56,15 @@
 	/>
 </section>
 
-<h1>Featured Posts</h1>
+<h1>Featured News</h1>
 
 <div class="carousel">
 	{#each posts as post}
 		<CarouselCard post={post} />
 	{/each}
 </div>
+
+<h1>Other News</h1>
 
 <div class="posts">
 	{#if searchResult.length}

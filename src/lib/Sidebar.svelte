@@ -11,7 +11,7 @@
 {#if size === "sm" || size === "md"}
 	<aside class="absolute w-full h-full border-r-2 shadow-lg" class:open>
 		<nav class="p-14 text-xl">
-			<a class="block" on:click={() => open = !open} class:active={$page.path === "/"} sveltekit:prefetch href="/">
+			<a class="block" on:click={() => open = !open} class:active={$page.path === "/" || $page.path === "/posts/*"} sveltekit:prefetch href="/">
 				Featured
 			</a>
 			<a class="block" on:click={() => open = !open} class:active={$page.path === "/entertainment"} sveltekit:prefetch href="entertainment">
