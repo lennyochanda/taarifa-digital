@@ -12,7 +12,7 @@
 		<ul>
 			<li>
 				<Phone24 />
-				<p>+254705140895</p>
+				<p>+254702540895</p>
 			</li>
 			<br>
 			<li>
@@ -46,7 +46,10 @@
 		position: sticky;
 		top: 100vh;
 		padding: 1em 1.8em;
-		background: #333;
+		background: linear-gradient(rgba(25, 25, 25, 0.9), rgba(25, 25, 25, 0.9), rgba(25, 25, 25, 0.9)),url(footerBg.jpg);
+		background-position: center center;
+		background-repeat: no-repeat;
+		background-size: cover;
 		color: white;
 	}
 	h3 {
@@ -71,6 +74,7 @@
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
+		font-size: .6rem;
 	}
 
 	a, p {

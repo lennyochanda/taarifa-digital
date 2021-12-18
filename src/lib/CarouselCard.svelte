@@ -5,10 +5,10 @@
 
 <div class="card" style="background-image: url({src});">
 	<div class="card-content">
-		<h4 class="card-title">
+		<h3>
 			{post.title}
-		</h4>
-		<p class="card-body">
+		</h3>
+		<p>
 			{post.description}
 		</p>
 		<a sveltekit:prefetch href={`/posts/${post.id}`} class="button">Read more</a>
@@ -20,9 +20,9 @@
 		color: #eee;
 		background-color: gray;
 		background-size: cover;
-		padding: 6rem 0 0;
+		padding: 6rem auto;
 		margin: .5em;
-		max-width: 35ch;
+		max-width: 40ch;
 		border-radius: .7rem;
 		overflow: hidden;
 		transition: transform 500ms ease;
@@ -43,12 +43,12 @@
 		);
 	}
 
-	.card-title {
+	h3 {
 		font-size: 1.2em;
-		font-weight: 900;
+		font-weight: 600;
 	}
 
-	.card-body {
+	p {
 		color: rgb(255, 255, 255 / 0.85);
 		font-size: 1em;
 		font-weight: 300;

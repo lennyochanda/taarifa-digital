@@ -64,9 +64,9 @@
 	{/each}
 </div>
 
-<h1>Other News</h1>
+<h1>Latest News</h1>
 
-<div class="posts">
+<div class="posts flex">
 	{#if searchResult.length}
 		{#each searchResult as post}
 			<PostCard post={post} />
@@ -78,10 +78,11 @@
 
 <style>
 	.posts {
-		display: grid;
-		grid-template-columns: 1fr 1fr;
-		grid-gap: .5em;
-		margin: 2em 0;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		margin: 6em 0 0;
 	}
 
 	.carousel {

@@ -3,7 +3,9 @@
 	import { variables } from '$lib/variables'
 	import { page } from '$app/stores'
 
+
 	export async function load({ page }) {
+		const id = await page.params.id
 	  const graphcms = new GraphQLClient(variables.baseUrl,
 	  {
 	  	headers: {}
@@ -11,7 +13,7 @@
 
 		const QUERY = gql`
 	    {
-	      posts(where: {id: "${page.params.id}"}) {
+	      posts(where: {id: "${id}"}) {
 	      	id
 	        title
 	        tags
@@ -28,9 +30,7 @@
 	      }
 	    }
 	  ` 
-	  console.log(QUERY)
 	  const post = await graphcms.request(QUERY)
-	  console.log(post)
 		return {
 			props: {
 				post
@@ -43,36 +43,26 @@
 <script>
 	export let post
 	import Time16 from 'carbon-icons-svelte/lib/Time16'
-
-	const title = post.posts[0].title
-	const src = post.posts[0].image[0].url
-	const desc = post.posts[0].description[0]
-	const readTime = post.posts[0].readTime
-	const author = post.posts[0].authorId
-	const publishDate = post.posts[0].published.slice(0, 10)
-	const publishTime = post.posts[0].published.slice(11, 16)
-	const content = post.posts[0].content[0].html
-	console.log(content)
 </script>
 
 <div class="container">
-	<h2>{title}</h2>
+	<h2>{post.posts[0].title}</h2>
 	<div class="viewInfo">
-		<p>Written by <a href="/authors">{author}</a> on {publishDate} at {publishTime}</p>
+		<p>Written by <a href="/authors">{post.posts[0].authorId}</a> on {post.posts[0].published}</p>
 	</div>
 
 	<p class="description">
-		{desc}
+		{post.posts[0].description[0]}
 	</p>
 
 	<div class="wrapper">
-		<img {src} alt="About this post">
+		<img src={post.posts[0].image[0].url} alt="About this post">
 	</div>
-	<p>{@html content}</p>
+	<p>{@html post.posts[0].content[0].html}</p>
 
-	<h2>About {author}</h2>
+	<h2>About {post.posts[0].authorId}</h2>
 
-	<p>by <a sveltekit:prefetch href={`/authors/`}>me</a></p>	
+	<p>by <a sveltekit:prefetch href={`/authors/`}>{ post.posts[0].authorId }</a></p>	
 </div>
 
 
@@ -88,15 +78,12 @@
 		display:  inline-flex;
 		justify-content: left;
 		align-items: center;
-		color: #ff0000;
+		color: #999;
 		font-size: .8em;
 		margin: .8em;
-		margin-top: 2.5em;
 	}
 
 	.viewInfo > p {
-		color: #023047;
-		font-style: italic;
 		margin-left: .5em;
 	}
 
@@ -113,14 +100,14 @@
 
 	img {
 		height: auto;
-		max-width: 80%;
+		max-width: 90%;
 		display: inline-block;
 		border-radius: 5px;
 		margin-bottom: 2em;
 	}
 
 	h2 {
-		font-size: 2em;
+		font-size: 1.8em;
 		font-weight: 900;
 		line-height: 1em;
 		text-align: left;
